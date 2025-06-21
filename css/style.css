@@ -1,0 +1,71 @@
+/* General Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color:#fff;
+    background-color: #001a33;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+/* Navbar */
+.navbar{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    background-color: #001933;
+}
+.logo{
+    font-weight:bold;
+    font-size: 1.2rem;
+}
+
+.nav-links a{
+    margin: 0 1rem;
+    font-size:1rem;
+}
+
+.btn-outline{
+    border:1px solid #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-outline:hover{
+    background-color: #fff;
+    color: #001a33;
+}
+
+/* Hero Section */
+.hero{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.hero-left{
+    flex: 1;
+    max-width: 600px;
+    border: 1px solid black;
+}
+.hero-left h5{
+    color: #00bfff;
+    margin-bottom: 0.5rme;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.hero-left h1{
+    
+}
