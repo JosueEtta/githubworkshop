@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1751365288 source:c:\users\atabe\onedrive\desktop\digimark internship\cprogramming\odd_even\main.c
+	<stdio.h>
+	<stdlib.h>
+
