@@ -3,6 +3,7 @@
 
 
 void gameBoard(char board[3][3]){
+    printf("Welcome to the tic tac toe game \n\n");
     printf("\t  1      2      3\n");
      printf("\t------------------\n");
   for(int i=0;i < 3;i++){
@@ -57,7 +58,6 @@ int main(){
     char playerSign = 'X';
     int gameEnd = 0;
     int playerNumber =1;
-    printf("Welcome to the tic tac toe game \n\n");
     gameBoard(mainboard);
     while(gameEnd == 0 && playtimes <= 9){
         printf("Player %d select your row:",playerNumber);
@@ -94,10 +94,9 @@ int main(){
         if(playtimes == 9 && gameEnd == 0){
             printf("It's a draw");
             gameEnd = 1;
+             break;
         }
-        else{
-          playtimes++;
-        }
+        playtimes++;
     }
     return 0;
 }
