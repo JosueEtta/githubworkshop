@@ -5,14 +5,27 @@ using namespace std;
 class Animal{
   public:
       string name;
-      Animal(string name){
+      string family;
+      Animal(string name,string family){
       this->name = name;
+      this->family = family;
       }
-  protected:
+      void info(){
+        cout << "name :" << name << endl;
+        cout << "family :" << family << endl;
+      }
 };
+
+class wildAnimal : public Animal{
+ public:
+    wildAnimal(string name,string family= "Wild animal") : Animal(name,family){
+    }
+
+};
+
 int main()
 {
-
-    cout << "Hello world!" << endl;
+    wildAnimal wolf("wolf","canidae");
+    wolf.info();
     return 0;
 }
