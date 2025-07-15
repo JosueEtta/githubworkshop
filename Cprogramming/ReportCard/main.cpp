@@ -1,82 +1,128 @@
+
 #include <iostream>
 #include <string>
-
+#include <fstream>
 using namespace std;
 
-
-class Course{
-   public:
-   string courseName;
-   int coef;
-   float courseMark;
-
-   //Course()
+class Course {
+public:
+    string courseName;
+    int coef;
+    float courseMark;
 };
 
-class Student{
-   public:
+class Student {
+public:
     string name;
-    int mathScore;
-    char grade;
     int courseOffer;
     string gender;
     Course* courses;
 
-
-    Student(string name={0},int courseOffer=0,string gender={0}){
-      this->name = name;
-      this->courseOffer = courseOffer;
-      this->gender = gender;
+    // Constructor
+    Student(string name = "", int courseOffer = 0, string gender = "") {
+        this->name = name;
+        this->courseOffer = courseOffer;
+        this->gender = gender;
+        courses = nullptr; // Initialize courses to nullptr
     }
 
-    float average(){
-     float TotalMark=0;
-     int totalSum=0;
-      for(int i=0;i<courseOffer;i++){
-        TotalMark += courses[i].courseMark * courses[i].coef;
-        totalSum += courses[i].coef;
-      }
-      return TotalMark/totalSum;
+    // Destructor to free dynamically allocated memory
+    ~Student() {
+        delete[] courses;
     }
 
+    // Function to calculate the average
+    float average() {
+        float totalMark = 0;
+        int totalCoef = 0;
+
+        for (int i = 0; i < courseOffer; i++) {
+            totalMark += courses[i].courseMark * courses[i].coef;
+            totalCoef += courses[i].coef;
+        }
+
+        // Avoid division by zero
+        if (totalCoef == 0) {
+            return 0;
+        }
+
+        return totalMark / totalCoef;
+    }
+    //Creat csv file for the student
+    void writeDefaultTemplate(){
+       ofstream file;
+       file.open(this->name + ".csv");
+
+       if(file.is_open()){
+         file << "Report CARD" << endl;
+         file << "Name:" << "," << this->name << endl;
+         file << "Gender:" << "," << this->gender <<endl;
+         file << "Number of course:" << "," <<this->courseOffer << endl << endl;
+         file << "Course" << "," << "Coefficient" << "mark" << endl;
+          for(int i=0;i<this->courseOffer;i++){
+           file << courses[i].courseName << "," << courses[i].coef << "," << courses[i].courseMark << endl;
+          }
+         file << "\n";
+         file << "Average:" << "," << this->average() << endl;
+          }
+        else{
+            cout << "Unable to open file";
+        }
+       }
 };
 
-int main()
-{
-    int numberOfStudents=0;
-    cout << "\t===REPORT CARD===" << endl;
-    cout << "Enter the number of students:";
+
+int main() {
+    int numberOfStudents = 0;
+
+    cout << "\t=== REPORT CARD ===" << endl;
+    cout << "Enter the number of students: ";
     cin >> numberOfStudents;
-    cout << "\n";
+
+    // Dynamically allocate memory for students
     Student* students = new Student[numberOfStudents];
 
+    for (int i = 0; i < numberOfStudents; i++) {
+        cout << "\nStudent " << i + 1 << endl;
 
-    for(int i=0;i<numberOfStudents;i++){
-        cout << "Student " << i+1 <<endl;
-        cout << "Enter your name:";
+        cout << "Enter your name: ";
         cin >> students[i].name;
-        cout << "Enter the number of course you wish to offer:";
-         cout << "Enter your gender:";
+
+        cout << "Enter your gender: ";
         cin >> students[i].gender;
+
+        cout << "Enter the number of courses you wish to offer: ";
+        cin >> students[i].courseOffer;
+
+        // Dynamically allocate memory for courses
         students[i].courses = new Course[students[i].courseOffer];
-        cout << "\n";
-        for(int j=0;j < students[i].courseOffer;j++){
-            cout << "course" << j+1 << endl;
-            cout << "Enter name for course:";
+
+        for (int j = 0; j < students[i].courseOffer; j++) {
+            cout << "\nCourse " << j + 1 << endl;
+
+            cout << "Enter name for course: ";
             cin >> students[i].courses[j].courseName;
-            cout << students[i].courses[j].courseName;
-            cout << "Enter it's coefficient:";
+
+            cout << "Enter its coefficient: ";
             cin >> students[i].courses[j].coef;
-            cout << "Enter mark for the course:";
+
+            cout << "Enter mark for the course: ";
             cin >> students[i].courses[j].courseMark;
-            cout << "\n";
         }
-        cout << "\n";
+        students[i].writeDefaultTemplate();
     }
-      cout << "Name\tGender\tNumber of Course\tAverage\n";
-     for(int i=0;i < numberOfStudents;i++){
-           cout<< students[i].name << "\t"<< students[i].gender<<"\t"<< students[i].courseOffer<<"\t"<<students[i].average();
-           cout << "\n";
-        }
+    /*ofstream result;
+    result.open("result.csv");*/
+    // Display report card
+    cout << "\nName\tGender\tNumber of Courses\tAverage\n";
+    for (int i = 0; i < numberOfStudents; i++) {
+        cout << students[i].name << "\t" << students[i].gender << "\t" << students[i].courseOffer
+             << "\t\t" << students[i].average() << endl;
+        //result << students[i].name << "," << students[i].gender << "," <<  students[i].courseOffer << "," << students[i].average()  << endl;
+    }
+
+    // Free dynamically allocated memory
+    delete[] students;
+
     return 0;
 }
